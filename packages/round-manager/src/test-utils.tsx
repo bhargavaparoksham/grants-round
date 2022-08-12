@@ -44,6 +44,34 @@ export const makeRoundData = (overrides: Partial<Round> = {}): Round => {
   }
 }
 
+export type VerifiableCredential = {
+    "@context": string[];
+    type: string[];
+    credentialSubject: {
+        id: string;
+        "@context": { [key: string]: string }[];
+        hash?: string;
+        provider?: string;
+        address?: string;
+        challenge?: string;
+    };
+    issuer: string;
+    issuanceDate: string;
+    expirationDate: string;
+    proof: {
+        type: string;
+        proofPurpose: string;
+        verificationMethod: string;
+        created: string;
+        jws: string;
+    };
+};
+
+export type ProjectCredential = {
+
+}
+
+
 export const makeGrantApplicationData = (overrides: Partial<GrantApplication> = {}): GrantApplication => ({
     id: faker.random.alpha({ count: 10, casing: "lower" }),
     round: faker.random.alpha({ count: 59, casing: "lower" }),
@@ -59,7 +87,8 @@ export const makeGrantApplicationData = (overrides: Partial<GrantApplication> = 
       metaPtr: {
         protocol: randomInt(1, 10),
         pointer: faker.random.alpha({ count: 59, casing: "lower" }),
-      }
+      },
+        credentials: {}
     },
     answers: [],
     projectsMetaPtr: {
