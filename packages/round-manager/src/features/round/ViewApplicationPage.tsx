@@ -157,10 +157,15 @@ export default function ViewApplicationPage() {
                   <TwitterIcon className="inline-flex h-4 w-4 mr-1" />
                   <span className="text-xs text-grey-400">{getAnswer("Twitter")}</span>
                 </div>
-                <div className="text-grey-500 truncate block">
-                  <GithubIcon className="inline-flex h-4 w-4 text-black mr-1" />
-                  <span className="text-xs text-grey-400">{getAnswer("Github")}</span>
-                </div>
+
+                    <div className="text-grey-500 truncate block">
+                      <GithubIcon className="inline-flex h-4 w-4 text-black mr-1"/>
+                      <span className="text-xs text-grey-400">{getAnswer("Github")}</span>
+                      {passport.verifyCredentials() &&
+                          <VerifiedIcon className="" data-testid="github-verified-credential"/>
+                      }
+                    </div>
+
               </div>
 
               <hr className="my-6" />

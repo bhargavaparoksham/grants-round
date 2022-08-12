@@ -153,6 +153,12 @@ export interface Round {
 
 export type ProjectStatus = "PENDING" | "APPROVED" | "REJECTED" | "APPEAL" | "FRAUD";
 
+export type ProjectCredential = {
+  input: string,
+  credential: VerifiableCredential
+}
+
+
 export interface GrantApplication {
   /**
    * The on-chain unique grant application ID
@@ -178,10 +184,7 @@ export interface GrantApplication {
     bannerImg?: string,
     logoImg: string,
     credentials: {
-      [key:string]: {
-        input: string,
-        credential: VerifiableCredential
-      }
+      [key:string]: ProjectCredential
     }
     metaPtr: MetadataPointer
   };
