@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@craco/craco": "^6.4.3",
+    "@gitcoinco/passport-sdk-verifier": "^0.1.2",
     "@headlessui/react": "^1.6.6",
     "@heroicons/react": "^1.0.6",
     "@hookform/resolvers": "^2.9.2",
@@ -75,6 +76,7 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^7.4.0",
+    "@gitcoinco/passport-sdk-types": "^0.1.2",
     "@tailwindcss/line-clamp": "^0.4.0",
     "autoprefixer": "^10.4.7",
     "msw": "^0.44.2",

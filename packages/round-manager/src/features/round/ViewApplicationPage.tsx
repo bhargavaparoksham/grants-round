@@ -13,7 +13,7 @@ import { Button } from "../common/styles"
 import { ReactComponent as TwitterIcon } from "../../assets/twitter-logo.svg"
 import { ReactComponent as GithubIcon } from "../../assets/github-logo.svg"
 import Footer from "../common/Footer"
-
+import PassportVerifier from "@gitcoinco/passport-sdk-verifier";
 
 type ApplicationStatus = "APPROVED" | "REJECTED"
 
@@ -24,6 +24,7 @@ export default function ViewApplicationPage() {
   const { roundId, id } = useParams()
   const { address, provider, signer } = useWallet()
   const navigate = useNavigate()
+  const verifier = new PassportVerifier();
 
   const {
     application,
@@ -161,7 +162,8 @@ export default function ViewApplicationPage() {
                     <div className="text-grey-500 truncate block">
                       <GithubIcon className="inline-flex h-4 w-4 text-black mr-1"/>
                       <span className="text-xs text-grey-400">{getAnswer("Github")}</span>
-                      {passport.verifyCredentials() &&
+                      {
+                        passport.verifyCredentials() &&
                           <VerifiedIcon className="" data-testid="github-verified-credential"/>
                       }
                     </div>
