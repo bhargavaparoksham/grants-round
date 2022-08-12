@@ -18,34 +18,38 @@ jest.mock("../common/Auth", () => ({
 
 describe('ViewApplicationPage', () => {
 
-    it('shows no github credentials when there are none', async () => {
-        (useListGrantApplicationsQuery as any).mockReturnValue({
-            application: makeGrantApplicationData(),
-            isLoading: false
+    describe('Project Manager - verified social credentials', () => {
+
+        it('shows no github verification', async () => {
+            const noGithubVerification = {
+                application: makeGrantApplicationData(),
+                isLoading: false
+            };
+            (useListGrantApplicationsQuery as any).mockReturnValue(noGithubVerification);
+            (useUpdateGrantApplicationMutation as any).mockReturnValue([jest.fn(), {isLoading: false}]);
+            (useListRoundsQuery as any).mockReturnValue({round: {}});
+            (useSwitchNetwork as any).mockReturnValue({chains: []});
+            (useDisconnect as any).mockReturnValue({});
+
+            await renderWrapped(<ViewApplicationPage/>);
+
+            expect(screen.queryByTestId("github-verified-credential")).not.toBeInTheDocument();
         });
-        (useUpdateGrantApplicationMutation as any).mockReturnValue([jest.fn(), {isLoading: false}]);
-        (useListRoundsQuery as any).mockReturnValue({round: {}});
-        (useSwitchNetwork as any).mockReturnValue({chains: []});
-        (useDisconnect as any).mockReturnValue({});
 
-        await renderWrapped(<ViewApplicationPage/>);
+        it('shows github verification', async () => {
+            const verifiedGithubCredential = {
+                application: makeGrantApplicationData({},
+                    {credentials: {"github": makeProjectCredentialData()}})
+            };
+            (useListGrantApplicationsQuery as any).mockReturnValue(verifiedGithubCredential);
+            (useUpdateGrantApplicationMutation as any).mockReturnValue([jest.fn(), {isLoading: false}]);
+            (useListRoundsQuery as any).mockReturnValue({round: {}});
+            (useSwitchNetwork as any).mockReturnValue({chains: []});
+            (useDisconnect as any).mockReturnValue({});
 
-        expect(screen.queryByTestId("github-verified-credential")).not.toBeInTheDocument();
-    });
+            await renderWrapped(<ViewApplicationPage/>);
 
-    it('shows github when vc is present', async () => {
-        (useListGrantApplicationsQuery as any).mockReturnValue({
-            application: makeGrantApplicationData({},
-                {credentials: {"github": makeProjectCredentialData()}})
+            expect(screen.queryByTestId("github-verified-credential")).toBeInTheDocument();
         });
-        (useUpdateGrantApplicationMutation as any).mockReturnValue([jest.fn(), {isLoading: false}]);
-        (useListRoundsQuery as any).mockReturnValue({round: {}});
-        (useSwitchNetwork as any).mockReturnValue({chains: []});
-        (useDisconnect as any).mockReturnValue({});
-
-        await renderWrapped(<ViewApplicationPage/>);
-
-        expect(screen.queryByTestId("github-verified-credential")).toBeInTheDocument();
     });
-
 });
